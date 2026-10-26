@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2a0f22">
+<title>Для тебя ♡</title>
+<meta name="description" content="Маленькая история про нас">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --hand: 'Caveat', 'Segoe Script', cursive;
+    --cream: #fff3ec;
+    --soft: #ffd9c7;
+    --rose: #ff9e8e;
+    --deep: #2a0f22;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--hand);
+    color:var(--cream);
+    background:#1a0716;
+    overflow-x:hidden;
+    overflow-wrap:break-word;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  img{max-width:100%; height:auto;}
+
+  /* ---------- ФОН: малиновый закат, облака, звёзды ---------- */
+  .bg{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+      radial-gradient(120% 70% at 50% 108%, #ffcf9b 0%, #ff9d6e 12%, #e9614f 26%, #b83a52 40%, #7d2246 55%, #47153a 72%, #230a20 88%, #150614 100%);
+  }
+  .sun{
+    position:absolute;
+    left:50%;
+    bottom:-14vh;
+    width:70vw;
+    height:70vw;
+    max-width:900px;
+    max-height:900px;
+    transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(255,226,180,.85) 0%, rgba(255,168,120,.5) 26%, rgba(255,120,100,.18) 46%, rgba(255,120,100,0) 66%);
+    filter:blur(6px);
+    pointer-events:none;
+  }
+  .stars{position:absolute;inset:0;pointer-events:none;}
+  .star{
+    position:absolute;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 6px rgba(255,255,255,.9);
+    animation:twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.15; transform:scale(.7);}
+    50%{opacity:1; transform:scale(1.15);}
+  }
+  .clouds{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+  .cloud{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(24px);
+    opacity:.75;
+    animation:drift linear infinite;
+  }
+  .cloud.c1{width:46vw;height:11vw;left:-50vw;top:12%;background:radial-gradient(closest-side, rgba(255,196,178,.55), rgba(255,196,178,0));animation-duration:150s;}
+  .cloud.c2{width:60vw;height:14vw;left:-70vw;top:30%;background:radial-gradient(closest-side, rgba(255,160,150,.42), rgba(255,160,150,0));animation-duration:200s;animation-delay:-40s;}
+  .cloud.c3{width:38vw;height:10vw;left:-40vw;top:47%;background:radial-gradient(closest-side, rgba(255,225,200,.35), rgba(255,225,200,0));animation-duration:120s;animation-delay:-70s;}
+  .cloud.c4{width:72vw;height:16vw;left:-80vw;top:62%;background:radial-gradient(closest-side, rgba(255,140,130,.32), rgba(255,140,130,0));animation-duration:240s;animation-delay:-20s;}
+  @keyframes drift{
+    from{transform:translateX(0);}
+    to{transform:translateX(220vw);}
+  }
+  .grain{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    pointer-events:none;
+    opacity:.35;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:3px 3px;
+  }
+
+  /* ---------- ОБЩЕЕ ---------- */
+  main{
+    position:relative;
+    z-index:1;
+    max-width:980px;
+    margin:0 auto;
+    padding:0 22px;
+  }
+  section{padding:70px 0;}
+  .reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .reveal.in{opacity:1; transform:none;}
+
+  /* ---------- ГЛАВНЫЙ ЭКРАН ---------- */
+  .hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 0 60px;
+    padding-top:max(80px, env(safe-area-inset-top));
+  }
+  .eyebrow{
+    font-size:clamp(15px,2.4vw,19px);
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:rgba(255,225,210,.7);
+    margin:0 0 10px;
+    font-family:'Segoe UI',sans-serif;
+    font-size:12px;
+  }
+  .hero h1{
+    font-size:clamp(58px,13vw,140px);
+    line-height:.95;
+    font-weight:700;
+    margin:18px 0 6px;
+    color:#fff6ef;
+    text-shadow:0 6px 40px rgba(255,120,110,.55), 0 0 90px rgba(255,180,140,.35);
+  }
+  .hero .sub{
+    font-size:clamp(22px,3.6vw,32px);
+    color:rgba(255,225,212,.9);
+    margin:0 0 40px;
+  }
+  .heart{
+    display:inline-block;
+    animation:beat 2.6s ease-in-out infinite;
+    color:#ff8f8f;
+  }
+  @keyframes beat{
+    0%,100%{transform:scale(1);}
+    18%{transform:scale(1.16);}
+    36%{transform:scale(1);}
+    54%{transform:scale(1.09);}
+  }
+
+  /* ---------- СЧЁТЧИК ---------- */
+  .counter{
+    width:100%;
+    max-width:560px;
+    padding:26px 24px 22px;
+    border-radius:26px;
+    background:rgba(60,16,42,.32);
+    border:1px solid rgba(255,200,185,.22);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 18px 50px rgba(0,0,0,.28);
+  }
+  .counter .label{
+    font-size:17px;
+    letter-spacing:.06em;
+    color:rgba(255,220,205,.75);
+    margin:0 0 4px;
+  }
+  .counter .days{
+    font-size:clamp(64px,15vw,110px);
+    font-weight:700;
+    line-height:1;
+    color:#fff3ea;
+    text-shadow:0 0 40px rgba(255,140,120,.5);
+  }
+  .counter .days-unit{
+    font-size:clamp(20px,3.5vw,28px);
+    color:rgba(255,220,208,.85);
+    margin-left:8px;
+  }
+  .clock{
+    margin-top:12px;
+    font-family:'Segoe UI',sans-serif;
+    font-size:13px;
+    letter-spacing:.16em;
+    color:rgba(255,210,195,.6);
+  }
+  .since{
+    margin-top:14px;
+    font-size:16px;
+    color:rgba(255,205,190,.55);
+  }
+
+  /* ---------- ГАЛЕРЕЯ ---------- */
+  .sec-title{
+    text-align:center;
+    font-size:clamp(34px,6.5vw,54px);
+    font-weight:700;
+    margin:0 0 8px;
+    color:#fff2e9;
+  }
+  .sec-sub{
+    text-align:center;
+    color:rgba(255,215,200,.65);
+    margin:0 0 46px;
+    font-size:18px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+  }
+  .card{
+    background:rgba(52,14,38,.34);
+    border:1px solid rgba(255,200,185,.2);
+    border-radius:22px;
+    padding:12px 12px 20px;
+    box-shadow:0 16px 42px rgba(0,0,0,.3);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    transition:transform .5s ease, box-shadow .5s ease;
+  }
+  .card:hover{
+    transform:translateY(-8px) rotate(-.4deg);
+    box-shadow:0 26px 60px rgba(0,0,0,.42);
+  }
+  .card img{
+    display:block;
+    width:100%;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    border-radius:14px;
+    background:#3a1230;
+  }
+  .card figcaption{
+    font-size:22px;
+    line-height:1.45;
+    color:#ffe4d6;
+    margin:14px 6px 0;
+    text-align:center;
+  }
+  .card.wide{grid-column:1 / -1;}
+  .card.wide img{aspect-ratio:16/10;}
+
+  /* ---------- ПИСЬМО ---------- */
+  .letter{
+    max-width:740px;
+    margin:0 auto;
+    padding:clamp(28px,5vw,52px);
+    border-radius:28px;
+    background:
+      linear-gradient(180deg, rgba(255,245,238,.13), rgba(255,225,215,.07));
+    border:1px solid rgba(255,205,190,.3);
+    box-shadow:0 22px 60px rgba(0,0,0,.35);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+  .letter p{
+    font-size:clamp(20px,3.1vw,26px);
+    line-height:1.72;
+    margin:0 0 20px;
+    color:#fff0e6;
+  }
+  .letter p:last-of-type{margin-bottom:0;}
+  .letter .greet{
+    font-size:clamp(28px,5vw,40px);
+    font-weight:700;
+    margin-bottom:18px;
+    color:#ffd9c8;
+  }
+  .sign{
+    margin-top:34px;
+    text-align:right;
+    font-size:clamp(24px,4vw,32px);
+    color:#ffc9b6;
+  }
+  .sign small{
+    display:block;
+    font-size:15px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:rgba(255,200,185,.5);
+    font-family:'Segoe UI',sans-serif;
+    margin-top:6px;
+  }
+
+  /* ---------- ПОДВАЛ ---------- */
+  footer{
+    text-align:center;
+    padding:60px 20px 80px;
+    color:rgba(255,228,218,.88);
+    font-size:19px;
+  }
+  footer .tiny{
+    display:block;
+    margin-top:10px;
+    font-family:'Segoe UI',sans-serif;
+    font-size:13px;
+    letter-spacing:.12em;
+    color:rgba(255,232,222,.75);
+  }
+  .scroll-hint{
+    margin-top:46px;
+    font-size:15px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    font-family:'Segoe UI',sans-serif;
+    color:rgba(255,215,200,.5);
+    animation:bob 2.8s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{transform:translateY(0); opacity:.5;}
+    50%{transform:translateY(9px); opacity:.9;}
+  }
+
+  @media(max-width:640px){
+    main{padding:0 16px;}
+    section{padding:46px 0;}
+
+    .hero{padding:64px 0 40px; padding-top:max(64px, env(safe-area-inset-top));}
+    .hero h1{font-size:clamp(46px,15vw,86px); line-height:1; margin:14px 0 4px;}
+    .hero .sub{font-size:20px; margin-bottom:30px;}
+    .eyebrow{font-size:10px; letter-spacing:.16em;}
+    .scroll-hint{margin-top:30px; font-size:12px;}
+
+    .counter{max-width:100%; padding:22px 16px 18px; border-radius:22px;}
+    .counter .label{font-size:15px;}
+    .counter .days{font-size:clamp(56px,19vw,84px);}
+    .counter .days-unit{font-size:18px; margin-left:6px;}
+    .clock{font-size:11px; letter-spacing:.12em;}
+    .since{font-size:14px; line-height:1.5;}
+
+    .sec-title{font-size:clamp(30px,8vw,40px);}
+    .sec-sub{font-size:16px; margin-bottom:30px;}
+
+    .grid{grid-template-columns:1fr; gap:22px;}
+    .card{padding:10px 10px 16px; border-radius:18px;}
+    .card.wide{grid-column:auto;}
+    .card.wide img{aspect-ratio:3/4;}
+    .card img{aspect-ratio:3/4; border-radius:12px;}
+    .card figcaption{font-size:19px; line-height:1.45; margin:12px 4px 0;}
+    .card:hover{transform:none;}
+
+    .letter{padding:24px 18px 28px; border-radius:20px;}
+    .letter p{font-size:19px; line-height:1.68; margin-bottom:16px;}
+    .letter .greet{font-size:26px; margin-bottom:14px;}
+    .sign{font-size:24px; margin-top:26px;}
+    .sign small{font-size:11px;}
+
+    footer{padding:40px 16px 60px; padding-bottom:max(60px, calc(40px + env(safe-area-inset-bottom))); font-size:17px;}
+
+    .cloud{filter:blur(18px);}
+  }
+
+  /* очень узкие экраны (iPhone SE и подобные) */
+  @media(max-width:380px){
+    .hero h1{font-size:44px;}
+    .counter .days{font-size:52px;}
+    .letter p{font-size:18px;}
+    .card figcaption{font-size:18px;}
+  }
+
+  /* тач-устройства */
+  @media(hover:none){
+    .card:hover{transform:none; box-shadow:0 16px 42px rgba(0,0,0,.3);}
+    .card:active{transform:scale(.985);}
+    *{-webkit-tap-highlight-color:transparent;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+    .reveal{opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ФОН -->
+<div class="bg" aria-hidden="true">
+  <div class="sun"></div>
+  <div class="clouds">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="cloud c4"></div>
+  </div>
+  <div class="stars" id="stars"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<main>
+
+  <!-- ГЛАВНЫЙ ЭКРАН -->
+  <section class="hero">
+    <p class="eyebrow">25 · 05 · 2025 — наша точка отсчёта</p>
+    <h1>Я люблю тебя</h1>
+    <p class="sub">и вот маленькая история про нас <span class="heart">♥</span></p>
+
+    <div class="counter">
+      <p class="label">мы вместе уже</p>
+      <div>
+        <span class="days" id="days">0</span><span class="days-unit">дней</span>
+      </div>
+      <div class="clock" id="clock">00 : 00 : 00</div>
+      <p class="since">с 25 мая 2025 года — и дальше только больше</p>
+    </div>
+
+    <div class="scroll-hint">листай ↓</div>
+  </section>
+
+  <!-- ГАЛЕРЕЯ -->
+  <section>
+    <h2 class="sec-title reveal">Наши кадры</h2>
+    <p class="sec-sub reveal">обычные дни, которые стали моими любимыми</p>
+
+    <div class="grid">
+
+      <figure class="card reveal">
+        <img src="photos/photo1.jpg" alt="Мы сидим за столиком на веранде в лесу">
+        <figcaption>Один столик на двоих, шум леса за окном — и ты, которая смотрит так, что я забываю, что хотел сказать.</figcaption>
+      </figure>
+
+      <figure class="card reveal">
+        <img src="photos/photo2.jpg" alt="Мы целуемся на дороге, держась за руки">
+        <figcaption>Тут я понял: не важно, куда мы идём. Важно, что за руку и рядом.</figcaption>
+      </figure>
+
+      <figure class="card reveal">
+        <img src="photos/photo3.jpg" alt="Я целую её в щёку, она закатывает глаза">
+        <figcaption>Ты делаешь вид, что недовольна, но не отодвигаешься. Это моя самая любимая твоя привычка.</figcaption>
+      </figure>
+
+      <figure class="card reveal">
+        <img src="photos/photo4.jpg" alt="Селфи вдвоём: он с смешной рожицей, она серьёзная">
+        <figcaption>Ты серьёзная, я с глупой рожицей. Кажется, это самый честный портрет нас.</figcaption>
+      </figure>
+
+      <figure class="card reveal wide">
+        <img src="photos/photo5.jpg" alt="Сонный поцелуй, мы лежим рядом">
+        <figcaption>Сонные, тёплые, лохматые. Моё самое любимое утро — то, которое начинается с тебя.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- ПИСЬМО -->
+  <section>
+    <h2 class="sec-title reveal">Письмо</h2>
+    <p class="sec-sub reveal">то, что я хочу сказать не только на словах</p>
+
+    <div class="letter reveal">
+      <p class="greet">Любимая моя,</p>
+
+      <p>а помнишь, как я тебе неловко признался, когда был пьян? Я тогда совсем не понимал, что творю, — но говорил правду. Каждое слово было настоящим, просто смелости хватило только с чужой помощью.</p>
+
+      <p>Я до сих пор не знаю, как так вышло, что я полюбил тебя настолько сильно, что уже не могу — и не хочу — тебя забывать. Ты стала тем человеком, с которым хочется делить вообще всё: тишину, дорогу, еду на ходу, сонные утра и самые глупые шутки, которые понимаем только мы.</p>
+
+      <p>Спасибо, что ты рядом. За то, как ты морщишь нос, когда я говорю что-то нелепое. За твоё плечо, к которому можно прислониться в любой момент. За то, что с тобой даже обычный день становится тем, который хочется запомнить.</p>
+
+      <p>Я люблю тебя тихо и очень сильно. И с каждым днём — сильнее.</p>
+
+      <p class="sign">Твой, навсегда <span class="heart">♥</span>
+        <small>и это не изменится</small>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    сделано с любовью, только для тебя
+    <span class="tiny">25 · 05 · 2025 — ∞</span>
+  </footer>
+
+</main>
+
+<script>
+  /* ---------- ЗВЁЗДЫ ---------- */
+  (function makeStars(){
+    var box = document.getElementById('stars');
+    if(!box) return;
+    var n = window.innerWidth < 640 ? 55 : 110;
+    var frag = document.createDocumentFragment();
+    for(var i=0;i<n;i++){
+      var s = document.createElement('span');
+      s.className = 'star';
+      var size = (Math.random()*2 + 0.8).toFixed(2);
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.left = (Math.random()*100).toFixed(2) + '%';
+      s.style.top = (Math.random()*72).toFixed(2) + '%';
+      s.style.animationDuration = (2 + Math.random()*4).toFixed(2) + 's';
+      s.style.animationDelay = (-Math.random()*6).toFixed(2) + 's';
+      s.style.opacity = (0.3 + Math.random()*0.7).toFixed(2);
+      frag.appendChild(s);
+    }
+    box.appendChild(frag);
+  })();
+
+  /* ---------- СЧЁТЧИК ---------- */
+  (function counter(){
+    var START = new Date(2025, 4, 25, 0, 0, 0); // 25 мая 2025
+    var daysEl = document.getElementById('days');
+    var clockEl = document.getElementById('clock');
+
+    function pad(v){ return v < 10 ? '0' + v : '' + v; }
+
+    function tick(){
+      var now = new Date();
+      var diff = now - START;
+      if(diff < 0) diff = 0;
+
+      var days = Math.floor(diff / 86400000);
+      var rest = diff % 86400000;
+      var h = Math.floor(rest / 3600000);
+      var m = Math.floor(rest % 3600000 / 60000);
+      var s = Math.floor(rest % 60000 / 1000);
+
+      daysEl.textContent = days.toLocaleString('ru-RU');
+      clockEl.textContent = pad(h) + ' : ' + pad(m) + ' : ' + pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  /* ---------- ПОЯВЛЕНИЕ ПРИ СКРОЛЛЕ ---------- */
+  (function revealOnScroll(){
+    var items = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+</body>
+</html>
